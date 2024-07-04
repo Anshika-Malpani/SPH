@@ -1,0 +1,254 @@
+<% include ./partials/header.ejs%>
+<style type="text/css" media="print">
+    body { visibility: hidden; display: none }
+</style>
+
+    <div class="main z-[10] relative">
+        <div class="w-full h-screen  bg-[#e4ebe8] flex flex-col">
+            <!-- upper div -->
+            <div class="w-full h-24 flex justify-between relative mt-16 prevent-select">
+                <div class="w-[80%] h-full flex items-center gap-4 border-b-2  pl-20">
+                    <div
+                        class="filters  text-white point-cursor h-10 border-[1px]  rounded-md flex gap-2 items-center justify-center px-3 bg-[#43856F] hover:bg-[#e4ebe8] hover:text-black hover:border-black cursor-pointer">
+                        <a href="/uploadProject">
+                            <i class="ri-upload-cloud-2-line text-xl"></i>
+                            <h5 class="text-md mb-1">Upload Project
+                        </a></h5>
+                    </div>
+                    <div
+                        class="filters  text-white point-cursor h-10 border-[1px] relative  rounded-md flex gap-2 items-center  bg-[#43856F]  hover:bg-[#e4ebe8] hover:text-black hover:border-black cursor-pointer">
+                        <i class="ri-school-fill text-xl pl-3 ic hover:text-black"></i>
+                        <h3 class="text-md uname ">University</h3>
+                        <i class="ri-arrow-drop-down-fill text-3xl mt-1 pr-3 ic"></i>
+                        <!-- <p class="updated-uni-name"></p> -->
+                        <div
+                            class="w-full max-h-[10.5rem] dropdown hidden bg-[#64a38c]  absolute top-[101%]  overflow-auto ">
+                            <% const uniqueNames = [...new Set(project.map(item => item.universityName))] %>  
+                            <% uniqueNames.forEach(function(element,i) { %>
+                            <div class="w-full  py-2 border-b-2  text-white px-2">
+                                <p class="text-sm universityNameFilter "><%= element  %></p>
+                            </div>
+                            <% })  %>
+                        </div>  
+                    </div>
+
+                    <div
+                        class="filters relative text-white point-cursor h-10 border-[1px]  rounded-md flex gap-2 items-center justify-center px-2 bg-[#43856F]  search cursor-pointer">
+                        <i class="ri-search-eye-line text-xl search-icon"></i>
+                        <input
+                            class="searchFilterinput placeholder-white w-32 bg-[#43856F]  px-2 text-md outline-none cursor-pointer  filters point-cursor"
+                            type="text" name="search" placeholder="Search for Title">
+                            <i class="ri-close-circle-line hidden text-xl text-black close-search-icon "></i>
+                            <div class="w-full dropdown-search hidden  bg-[#64a38c] absolute top-[101%]   overflow-hidden">
+                                
+                            </div>
+                    </div>
+
+                    <div
+                        class="filters relative text-white point-cursor h-10 border-[1px]  rounded-md flex gap-2 items-center  bg-[#43856F] hover:bg-[#e4ebe8] hover:text-black hover:border-black cursor-pointer">
+                        <i class="ri-list-indefinite text-xl pl-2 icons"></i>
+                        <h3 class="text-md mb-1 category">Category</h3>
+                        <i class="ri-arrow-drop-down-fill text-3xl pr-2 icons"></i>
+                        <div class="w-full dropdown-scnd hidden bg-[#64a38c] absolute top-[101%]   overflow-hidden">
+                            <div class="w-full py-2 border-b-2 text-white">
+                                <h5 class="text-sm text-center">Technical</h5>
+                            </div>
+                            <div class="w-full py-2 border-b-2 text-white">
+                                <h5 class="text-sm text-center">Management</h5>
+                            </div>
+                            <div class="w-full py-2 border-b-2 text-white">
+                                <h5 class="text-sm text-center">Science</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-[20%] h-full flex items-center justify-end pr-20 clearfilters">
+                    <div
+                        class="text-white h-10 border-[1px] rounded-md flex gap-2 items-center justify-center px-3 hover:bg-[#e4ebe8] bg-[#43856F] hover:text-black hover:border-black cursor-pointer">
+                        <i class="ri-filter-off-fill text-xl"></i>
+                        <h5 class="text-md mb-1">Clear filters</h5>
+                    </div>
+                </div>
+
+            </div>
+            <!-- bottom div -->
+            <div class="hero w-full border-gray-400 border-t-2 flex justify-center">
+                <div class="left w-[30%] py-4 overflow-auto prevent-select border-r-[1px] border-gray-400 pl-8 sidebarContainer">
+                    <% project.forEach(function(element,i) { %>
+                        <div class="w-full max-h-32 rounded-l-lg  hover:bg-[#b7d6c97c] p-2 sidebar" data-index="<%= element.projectTitle  %>" >
+                            <div class="fir flex w-full h-full gap-7  cursor-pointer point-cursor ">
+                                <div class="lef w-[3.6vw] h-[3.6vw] rounded-full overflow-hidden mt-2">
+                                    <img class="w-[3vw] h-[3vw] object-cover "
+                                        src="/temp/<%= element.universityLogo %>"
+                                        alt="">
+                                </div>
+                                <div class="rig w-[90%] h-full ">
+                                    <h1 class="text-xl font-semibold max-h-[4.5rem] uppercase text-[#0f1f1b] "><%= element.projectTitle  %></h1>
+                                    <h3 class="text-lg text-zinc-500"><%= element.universityName  %></h3>
+                                    <h3 class="text-md text-zinc-500 capitalize "><%= element.projectCategory  %></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <% })  %>
+    
+                </div>
+                
+
+                <div class="right w-[70%]   overflow-auto">
+                    <div class="w-full h-full  m-auto px-8 pt-7 hidden projectDetails">
+                        <div class="flex  justify-between items-center text-2xl gap-3 ">
+                            <div>
+                                <h1 class="text-3xl text-zinc-700  uppercase tracking-tight projectTitle"></h1>
+                            </div>
+                            <div class="flex gap-3 items-center w-[30vw]">
+                                <img src=""
+                                    alt="" class="h-10 universityLogo rounded-full overflow-hidden">
+                                <p class="text-base uppercase universityName"></p>
+                            </div>
+                        </div>
+                        <div>
+                            <div><span class="text-xl text-zinc-500 mt-2 mb-2 capitalize projectCategory inline-block"></span><span class="text-xl text-zinc-500 mt-2 mb-2 capitalize inline-block">&nbsp;Project</span></div>
+                            <button class=" collab-btn bg-[#43856F] px-2 py-2 rounded-md text-white point-cursor"  data-index="<%= JSON.stringify(loggedIn)%>">
+                            </button>
+                        </div>
+                        <div class="w-full h-[70%] flex items-center px-20">
+                            <i class="left-icon ri-arrow-left-s-line text-6xl point-cursor"></i>
+                            <div class="w-[60%] h-[80%] m-auto overflow-hidden projectImages">
+                                <img src=""
+                                    alt="" class="actual m-auto h-full  rounded-md">
+                                <img src=""
+                                    alt="" class="imm image">
+                                <img src=""
+                                    alt="" class="image imm">
+                                
+                            </div>
+                            <i class="right-icon ri-arrow-right-s-line text-6xl point-cursor"></i>
+                        </div>
+
+
+                        <h1 class="text-3xl mb-4">Project Description :</h1>
+                        <div class="projdesc w-full overflow-auto max-h-[40%] text-justify prevent-select ">
+                            <p class="projectDescription "></p>
+                        </div>
+                        <div class="mt-4 w-full ">
+                            <H1 class="text-3xl mb-2">Student Details:</H1>
+
+                            <div class="w-full max-h-60  flex flex-col gap-1 ">
+                                <div class="flex justify-between items-center w-full h-[25%]">
+                                    <div
+                                        class="w-[45%] h-full  text-center  border-2  border-black flex justify-center items-center">
+                                        <h1 class="text-[1.6vw] w-full font-semibold">Name</h1>
+                                    </div>
+                                    <div
+                                        class="w-[27.5%] h-full  text-center  border-2  border-black flex justify-center items-center">
+                                        <h1 class="text-[1.6vw] w-full font-semibold">Stream</h1>
+                                    </div>
+                                    <div
+                                        class="w-[27.5%] h-full text-center  border-2 flex-col border-black flex justify-center ">
+                                        <h1 class="text-[1.6vw] w-full  font-semibold ">Year Of Qualification</h1>
+                                       
+                                    </div>
+                                </div>                                                                                
+                            </div>
+
+                            <div class="w-full max-h-60  flex flex-col gap-1 studentDetails mt-1">                                                                                                             
+                            </div>
+                        </div>
+
+                        <div class=" w-full  flex gap-2 flex-col mt-4 pb-4">
+                            <div class="flex gap-2 items-center ">
+                                <h1 class="text-3xl font-medium totalComments"><%= review.length %></h1>
+                                <h1 class="text-3xl font-medium">Comments</h1>
+                            </div>
+                            <form action="/comments" method="post" class="commentbtn">
+                            <div  class="w-full h-[10vh]  flex items-center gap-2">
+                                <div class="w-12 h-12 rounded-full bg-[#43856F] overflow-hidden">
+
+                                    <% if(loggedIn){ %>
+                                        <img src="<%= avatar  %>" class="w-full h-full" alt="">
+                                    <% } else{ %>
+                                        <img src="https://yt3.ggpht.com/a/default-user=s88-c-k-c0x00ffffff-no-rj" class="w-full h-full" alt="">
+                                    <% } %>
+                                </div>
+                                <div class="w-[80%] mb-3">
+                                    <input type="text" name="comment" id="" class="w-full bg-[#E4EBE8] border-b-[1px] border-black outline-none comment" placeholder="Add a comment" data-index="<%= JSON.stringify(loggedIn)%>">
+                               
+                            </div>
+                                <div class="w-[15%] h-10 bg-[#43856F] rounded-2xl flex items-center justify-center point-cursor">
+                                    <input type="submit" value="Comment" class="text-white font-semibold commentButton point-cursor">
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="w-full comments"   >
+                           
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full h-full flex items-center m-auto px-12  uploadProjectSteps">
+                        <div class="w-full h-[50vh] ">
+                            <div class="w-full h-[20%] flex flex-col items-center  ">
+                                <h1 class="font-semibold text-xl">Upload your Project</h1>
+                                <h3 class="text-sm">Upload your project and showcase your skills to a global audience.</h3>
+                            </div>
+                            <div class="w-full h-[65%] flex items-center justify-between flex-wrap ">
+                                <div class="w-[24%] h-[100%]  flex flex-col gap-2  rounded-md px-2 ">
+                                    <div class="flex  justify-center mt-4">
+                                        <div class="w-[3vw] h-[3vw] bg-[#43856F] rounded-full flex items-center justify-center"><span class="text-lg font-semibold mb-[0.2rem] text-white">1</span></div>
+                                    </div>
+                                    <div class="px-2 mt-3">
+                                        <h4 class="tracking-tight font-semibold text-center">Enter university email</h4>
+                                    </div>
+                                    <div class="">
+                                        <h4 class="text-sm text-center opacity-75">Enter your university email. This will be used to verify your affiliation with the university</h4>
+                                    </div>
+                                </div>
+                                <div class="w-[24%] h-[100%]  flex flex-col gap-2  px-2 ">
+                                    <div class="flex  justify-center mt-4">
+                                        <div class="w-[3vw] h-[3vw] bg-[#43856F] rounded-full flex items-center justify-center"><span class="text-lg font-semibold mb-[0.2rem] text-white">2</span></div>
+                                    </div>
+                                    <div class="px-2 mt-3">
+                                        <h4 class="tracking-tight font-semibold text-center">Verify OTP</h4>
+                                    </div>
+                                    <div class="">
+                                        <h4 class="text-sm text-center opacity-75">Enter the verification code sent to your email. This code is used to verify your email.</h4>
+                                    </div>
+                                </div>
+                                <div class="w-[24%] h-[100%]  flex flex-col gap-2 px-2 ">
+                                    <div class="flex  justify-center mt-4">
+                                        <div class="w-[3vw] h-[3vw] bg-[#43856F] rounded-full flex items-center justify-center"><span class="text-lg font-semibold mb-[0.2rem] text-white">3</span></div>
+                                    </div>
+                                    <div class="px-2 mt-3">
+                                        <h4 class="tracking-tight font-semibold text-center">Fill project details</h4>
+                                    </div>
+                                    <div class="">
+                                        <h4 class="text-sm text-center opacity-75">Shape your project by sharing its details, and we'll ensure it's presented beautifully for the world to see.</h4>
+                                    </div>
+                                </div>
+                                <div class="w-[24%] h-[100%]  flex flex-col gap-2  px-2 ">
+                                    <div class="flex  justify-center mt-4">
+                                        <div class="w-[3vw] h-[3vw] bg-[#43856F] rounded-full flex items-center justify-center"><span class="text-lg font-semibold mb-[0.2rem] text-white">4</span></div>
+                                    </div>
+                                    <div class="px-2 mt-3">
+                                        <h4 class="tracking-tight font-semibold text-center">Project uploaded </h4>
+                                    </div>
+                                    <div class="">
+                                        <h4 class="text-sm text-center opacity-75">Success! Your project is now proudly displayed on our website, reaching audiences far and wide.</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-full h-[15%] bg-[#43856F] rounded-md mt-2">
+                                <a href="/uploadProject" class="text-lg font-semibold text-white w-full h-full  flex items-center justify-center point-cursor transition-all duration-200 ease-in-out hover:bg-[#39705e]"><button>Get started</button></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <script src="/javascripts/project.js"></script>
+    <% include ./partials/footer.ejs%>
